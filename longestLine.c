@@ -46,13 +46,13 @@ int main()
 		// Check if end of line
 		while (return_length == MAX_STRING_LENGTH - 1
 			&& line[return_length - 1] != '\n') {
-			printf("%s", line);
+			//printf("%s", line);
 			return_length = get_line(line, MAX_STRING_LENGTH);
 			line_length += return_length;
 		}
 		//replace the '\n' to ' ' in the original line
-		line[return_length - 1] = ' ';
-		printf("%s:%d\n", line, line_length);
+		//line[return_length - 1] = ' ';
+		//printf("%s:%d\n", line, line_length);
 
 		// Update max length
 		if (line_length > max_line_length)
