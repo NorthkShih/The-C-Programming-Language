@@ -20,15 +20,13 @@ int get_line(char *line, int max_length)
 	int i;
 	for (i = 0; i < max_length - 1; i++) {
 		line[i] = getchar();
-		if (line[i] == EOF)
-			return 0;
-		if (line[i] == '\n')
-			break;
-	}
-
-	if (line[i] == '\n') {
-		line[i + 1] = '\0';
-		return i + 1;
+		if (line[i] == EOF) {
+			return i;
+		}
+		if (line[i] == '\n') {
+			line[i + 1] = '\0';
+			return i + 1;
+		}
 	}
 
 	line[i] = '\0';
@@ -40,19 +38,26 @@ int main()
 	int max_line_length = 0;
 	int line_length, return_length;
 	char line[MAX_STRING_LENGTH] = {0};
+	int stop_loop = 0;
 
 	// Go through each line
-	while ((line_length = return_length = get_line(line, MAX_STRING_LENGTH)) != 0) {
+	while (stop_loop == 0 && (line_length = return_length = get_line(line, MAX_STRING_LENGTH)) != 0) {
 		// Check if end of line
 		while (return_length == MAX_STRING_LENGTH - 1
 			&& line[return_length - 1] != '\n') {
-			//printf("%s", line);
+			printf("%s", line);
 			return_length = get_line(line, MAX_STRING_LENGTH);
 			line_length += return_length;
 		}
 		//replace the '\n' to ' ' in the original line
-		//line[return_length - 1] = ' ';
-		//printf("%s:%d\n", line, line_length);
+		if (line[return_length - 1] == '\n')
+			line[return_length - 1] = ' ';
+		//catch the EOF input at the end of line
+		if (line[return_length] == EOF) {
+			line[return_length] = '\0';
+			stop_loop = 1;
+		}
+		printf("%s:%d\n", line, line_length);
 
 		// Update max length
 		if (line_length > max_line_length)
